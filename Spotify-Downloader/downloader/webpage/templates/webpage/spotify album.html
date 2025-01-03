@@ -1,0 +1,42 @@
+{% extends 'webpage/base.html' %}
+
+{% block title %}SaveSteamz - Spotify{% endblock %}
+
+{% block content %}
+    <h1>Spotify Album</h1>
+
+    <div class="d-flex justify-content-center mb-3">
+        <div class="card" style="width: 18rem;">
+            <img src="{{ info.1 }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="card-text">
+                    <a class="text-success" target="_blank" href="{{ link }}"><strong>{{ info.0 }}</strong></a>
+                    contains {{ song_len }} tracks, by {{ info.2 }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <form method="post" action="{% url 'spotify album' %}" id="filenames_form">
+        <div class="mb-3 d-flex justify-content-center">
+            <button type="submit" class="btn btn-success">Download as .zip</button>
+        </div>
+        <hr>
+        {% csrf_token %}
+        {% for i, song, artists, api_link in songs %}
+        {% if song %}
+        <div class="hstack gap-3 mb-3">
+            <span class="d-inline">{{ i }}</span>
+            <input class="form-control" type="text" name="song_name_{{i}}" id="filename{{i}}" value="{{ song }} - {{ artists }}" readonly>
+            <a href="{% url 'spotify track' %}?api_link={{ api_link }}" class="btn btn-outline-success">Download</a>
+        </div>
+        <hr>
+        {% endif %}
+        {% endfor %}
+
+        <div class="mb-3 d-flex justify-content-center">
+            <button type="submit" class="btn btn-success">Download as .zip</button>
+        </div>
+    </form>
+
+{% endblock %}

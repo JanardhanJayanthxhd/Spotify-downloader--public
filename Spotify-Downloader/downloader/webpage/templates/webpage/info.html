@@ -1,0 +1,151 @@
+{% extends 'webpage/base.html' %}
+
+{% load static %}
+
+{% block title %}SaveSteamz - Spotify{% endblock %}
+
+{% block content %}
+<h1>How to use SaveStreamz</h1>
+
+<div>
+  <div>
+      <!-- 'How to' collapse -->
+      <div class="mb-3" id="collapseInfo">
+          <p class="d-inline-flex gap-1">
+              <a class="icon-link icon-link-hover text-success" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  How it works
+              </a>
+          </p>
+          <div class="collapse" id="collapseExample">
+              <div class="card card-body">
+                  <p>
+                      <strong>NOTE :</strong>
+                      Each input(listing) contains a song name that will be searched in youtube and downloaded as audio.
+                      <br>
+                      For example : <br>
+                      The first song is 'After Dark - Mr.Kitty',<br>
+                      this will be searched in Youtube as 'After Dark - Mr.Kitty <strong title="'official audio' is added in the end for searching in youtube">official audio</strong>'<br>
+                      The first result is selected for final download. this happens for all following songs and finally all of them will be
+                      downloaded to a .zip or .mp3 file.
+                  </p>
+              </div>
+          </div>
+      </div>
+
+    <h3>Get url</h3>
+    <div class="px-2">
+      <h4 class="fs-4">Youtube URL</h4>
+      <div class="px-2">
+        <p class="fs-5">Youtube video address</p>
+        <img src="{% static 'webpage/img/yt/yt share url address bar.png' %}" class="img-fluid rounded" alt="address bar image"
+             data-bs-toggle="tooltip"
+             data-bs-placement="right"
+             data-bs-title="Copy the address from the address bar of the video you're currently watching.">
+          <p class="fs-5">Youtube share link:</p>
+        <img src="{% static 'webpage/img/yt/yt share 1.png' %}" class="img-fluid rounded" alt="youtube search results image"
+             data-bs-toggle="tooltip"
+             data-bs-placement="right"
+             data-bs-title="By clicking '⁝'(3 dots) on the left side of video when you search">
+        <img src="{% static 'webpage/img/yt/yt share 3.png' %}" class="img-fluid my-3 rounded" alt="share button under the video image"
+             data-bs-toggle="tooltip"
+             data-bs-placement="right"
+             data-bs-title="Or share icon under the video that you're watching">
+        <div class="text-center">
+            <img src="{% static 'webpage/img/yt/yt share 2.png' %}" class="img-fluid rounded" alt="youtube share link popup"
+                 data-bs-toggle="tooltip"
+                 data-bs-placement="right"
+                 data-bs-title="Copy the share link from the popup, then paste it inside input in home page">
+        </div>
+        <p class="fs-5 pt-3">Youtube mobile</p>
+       <div class="container text-center row gap-3">
+          <div class="col-12 col-md">
+            <img src="{% static 'webpage/img/yt/yt mobile 3.jpg' %}" class="img-fluid rounded" alt="address bar image"
+                 data-bs-toggle="tooltip"
+                 data-bs-placement="left"
+                 data-bs-title="Click '⁝'(3 dots) to open options > click share inside options">
+          </div>
+          <div class="col-12 col-md">
+            <img src="{% static 'webpage/img/yt/yt mobile 2.jpg' %}" class="img-fluid rounded" alt="address bar image"
+                 data-bs-toggle="tooltip"
+                 data-bs-placement="top"
+                 data-bs-title="Click share under video player">
+          </div>
+          <div class="col-12 col-md">
+            <img src="{% static 'webpage/img/yt/yt mobile 1.jpg' %}" class="img-fluid rounded" alt="address bar image"
+                 data-bs-toggle="tooltip"
+                 data-bs-placement="right"
+                 data-bs-title="From the options click copy link to copy the share link.">
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="px-2 pt-4 mb-5">
+      <h4 class="fs-4">Spotify URL</h4>
+
+      <div class="px-2">
+          <p class="fs-5">Track URL</p>
+          <img src="{% static 'webpage/img/spotify/sp track.png' %}" class="img-fluid rounded" alt="address bar image"
+               data-bs-toggle="tooltip"
+               data-bs-placement="right"
+               data-bs-title="Get track url by clicking '⁝'(3 dots) at the end of the track > share > copy song link">
+          <p class="fs-5 py-3">Playlist URL</p>
+          <img src="{% static 'webpage/img/spotify/sp playlist.png' %}" class="img-fluid rounded" alt="address bar image"
+               data-bs-toggle="tooltip"
+               data-bs-placement="right"
+               data-bs-title="Get playlist url by clicking '⁝'(3 dots) near play symbol of the playlist > share > copy link to playlists">
+
+          <p class="fs-5 pt-3">Spotify mobile</p>
+          <div class="container text-center gap-2">
+              <div class="row mb-3 gap-3">
+                  <p class="fs-5">Track</p>
+                  <div class="col-12 col-md">
+                      <img src="{% static 'webpage/img/spotify/sp mobile 3.jpg' %}" class="img-fluid rounded" alt="address bar image"
+                           data-bs-toggle="tooltip"
+                           data-bs-placement="right"
+                           data-bs-title="Get playlist url by tapping '⁝'(3 dots) after invite collaborators icon">
+                  </div>
+                  <div class="col-12 col-md">
+                      <img src="{% static 'webpage/img/spotify/sp mobile 4.jpg' %}" class="img-fluid rounded" alt="address bar image"
+                           data-bs-toggle="tooltip"
+                           data-bs-placement="right"
+                           data-bs-title="Scroll down and tap share">
+                  </div>
+                  <div class="col-12 col-md">
+                      <img src="{% static 'webpage/img/spotify/sp mobile 5.jpg' %}" class="img-fluid rounded" alt="address bar image"
+                           data-bs-toggle="tooltip"
+                           data-bs-placement="right"
+                           data-bs-title="tap 'copy link' from the bottom-left">
+                  </div>
+              </div>
+              <div class="row gap-3">
+                  <p class="fs-5">Playlist</p>
+                  <div class="col-12 col-md" style="height: 400px;">
+                      <img src="{% static 'webpage/img/spotify/sp mobile 1.jpg' %}" class="img-fluid rounded" alt="address bar image"
+                           data-bs-toggle="tooltip"
+                           data-bs-placement="left"
+                           data-bs-title="Get track url by tapping '⁝'(3 dots) at end of track > share">
+                  </div>
+                  <div class="col-12 col-md">
+                      <img src="{% static 'webpage/img/spotify/sp mobile 2.jpg' %}" class="img-fluid rounded" alt="address bar image"
+                           data-bs-toggle="tooltip"
+                           data-bs-placement="left"
+                           data-bs-title="and copy link from bottom-left">
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+        // For tooltips - from Bootstrap
+        document.addEventListener("DOMContentLoaded", function () {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+                new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+{% endblock %}

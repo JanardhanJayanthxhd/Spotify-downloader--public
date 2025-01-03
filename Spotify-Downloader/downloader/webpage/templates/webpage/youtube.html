@@ -1,0 +1,27 @@
+{% extends 'webpage/base.html' %}
+
+{% block title %}SaveSteamz - Youtube{% endblock %}
+
+{% block content %}
+<h1>Youtube audio</h1>
+
+
+<div class="d-flex justify-content-start">
+    <div class="card" style="width: 30rem;">
+        <img src="{{ yt.thumbnail_url }}" class="card-img-top" alt="youtube thumbnail image">
+        <div class="card-body">
+            <p class="card-text">
+                <a class="text-danger" href="{{ link }}" target="_blank">{{ yt.title }}</a> ( {{ duration }} minutes )
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<h4 class="mt-3">Youtube title :</h4>
+<form action="{% url 'youtube' %}" method="post" >
+    {% csrf_token %}
+    <input type="text" class="form-control" id="filenameinput" value="{{ yt.title }}" aria-describedby="fnamehelp" name="filenameinput" readonly>
+    <button type="submit" class="btn btn-danger mt-3">Download as audio</button>
+</form>
+{% endblock %}
