@@ -28,5 +28,14 @@ def get_youtube_url(search_query):
     Returns the first result's watch URL from youtube when searched using
     search_query(param) using pytube.Search()
     """
-    searches = Search(search_query + 'official audio')
-    return searches.videos[0].watch_url
+    try:
+        searches = Search(search_query + 'official audio')
+        _ = searches.videos[0]
+    except IndexError:
+        searches = Search(search_query)
+        search_vid = searches.videos[0]
+    else:
+        searches = Search(search_query + 'official audio')
+        search_vid = searches.videos[0]
+
+    return search_vid.watch_url
