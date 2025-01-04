@@ -18,9 +18,6 @@ import os
 
 def home(request):
     """Home page"""
-    # Delete all logs
-    # VideoLog.object.all().delete()
-
     if request.method == 'POST':
         input_link = request.POST['link']
 
@@ -149,7 +146,7 @@ def spotify(request):
 
                 if r_batch_id is not None:
                     batch_length = len(songs_fragments)
-                    task_batch = [0]
+                    prev, curr = 0, 0
                     initial_tasks_length = 0
                     repeater = 0
                     sleep_time = 15
@@ -162,13 +159,14 @@ def spotify(request):
                         if tasks_len > initial_tasks_length:
                             sleep_time = 6
                             # Now the task length has started going up
-                            task_batch.append(tasks_len)
-                            if task_batch[-2] == task_batch[-1]:
+                            curr = tasks_len
+                            if curr == prev:
                                 if repeater == 15:
                                     break
                                 repeater += 1
-                            elif task_batch[-2] != task_batch[-1] and repeater > 1:
+                            elif curr != prev and repeater > 1:
                                 repeater = 1
+                            prev, curr = curr, 0
 
                         if tasks_len == batch_length:
                             break
@@ -272,7 +270,7 @@ def spotify_album(request):
 
                 if r_batch_id is not None:
                     batch_length = len(songs_fragments)
-                    task_batch = [0]
+                    prev, curr = 0, 0
                     initial_tasks_length = 0
                     repeater = 0
                     sleep_time = 15
@@ -285,13 +283,14 @@ def spotify_album(request):
                         if tasks_len > initial_tasks_length:
                             sleep_time = 6
                             # Now the task length has started going up
-                            task_batch.append(tasks_len)
-                            if task_batch[-2] == task_batch[-1]:
+                            curr = tasks_len
+                            if curr == prev:
                                 if repeater == 15:
                                     break
                                 repeater += 1
                             elif task_batch[-2] != task_batch[-1] and repeater > 1:
                                 repeater = 1
+                            prev, curr = curr, 0
 
                         if tasks_len == batch_length:
                             break
