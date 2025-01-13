@@ -14,15 +14,16 @@ import os
 EXPIRES_IN = 30
 
 
-def fix_filename(filename) -> bool:
+def fix_filename(filename):
     """
     Fixes filename by replacing invalid symbols with empty string('')
     Returns valid filename
     """
-    symbols = ['.', '/', '\\', '|', '*', '>', '<', '"', "'", ':']
+    symbols = ['.', '/', '\\', '|', '*', '>', '<', '"', ':', '?']
 
-    for symbol in symbols:
-        filename = filename.replace(symbol, '')
+    if filename:
+        for symbol in symbols:
+            filename = filename.replace(symbol, '')
 
     return filename
 
@@ -250,19 +251,26 @@ def write_unavailable_songs(songs_list, downloaded_contents, dir_path):
     Writes the list of un-downloaded songs(un-downloaded due to some error while using celery django)
     to a readme.txt file inside unique dir.
     """
-    downloaded_contents = set(song.replace('.mp3', '') for song in downloaded_contents)
+    d_contents = set()
+    for s in downloaded_contents:
+        file_rep = s.replace('.mp3', '')
+        file_fix = fix_filename(file_rep)
+        d_contents.add(file_fix)
 
     remaining_songs = []
     for song in songs_list:
-        if song not in downloaded_contents:
+        if fix_filename(song) not in d_contents:
             remaining_songs.append(song)
 
-    # Cannot download remaining songs so write it to a txt file
-    with open(os.path.join(dir_path, '000_readme.txt'), 'w') as f:
-        f.write('Here is the list of songs that could not be downloaded.\n'
-                ' try downloading them individually.')
-        f.write('\n')
-        for i, song in enumerate(remaining_songs, start=1):
-            f.write(f'{i} - {song}')
+    if remaining_songs:
+        # Cannot download remaining songs so write it to a txt file
+        with open(os.path.join(dir_path, '000_readme.txt'), 'w') as f:
+            f.write('Here is the list of songs that could not be downloaded.\n'
+                    ' try downloading them individually.')
             f.write('\n')
+            for i, song in enumerate(remaining_songs, start=1):
+                f.write(f'{i} - {song}')
+                f.write('\n')
+
+
 

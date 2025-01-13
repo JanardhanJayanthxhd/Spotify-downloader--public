@@ -61,4 +61,4 @@ Run the django project with environment activated:
 <img src="ss/spotify track.png">
 </details>
 
-## Demo
+## Demo > ss > rmd vid.gif
