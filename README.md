@@ -43,13 +43,22 @@ Run the django project with environment activated:
 
 ## Screenshots
 
-Home page
+(for demo see > `ss/rmd vid.gif`)
+
+<details><summary>Home page</summary>
 <img src="ss/home page.png">
-Youtube audio page
+</details>
+
+<details><summary>Youtube download page</summary>
 <img src="ss/youtube video.png">
-Spotify playlist
+</details>
+
+<details><summary>Spotify playlist page</summary>
 <img src="ss/spotify playlist.png">
-Spotify audio
+</details>
+
+<details><summary>Spotify track page</summary>
 <img src="ss/spotify track.png">
+</details>
 
 ## Demo

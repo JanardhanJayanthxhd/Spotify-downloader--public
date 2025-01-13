@@ -96,39 +96,7 @@ def spotify(request):
             print('downloading playlist')
             if songs_len <= 20:
                 try:
-                    # Initializing zip buffer
-                    zip_buffer = io.BytesIO()
-                    zip_filename = f'{uuid4().hex[:8]}_{datetime.now().strftime("%Y%m%d%H%M%S")}.zip'
-                    unavailable = []
-
-                    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zipf:
-                        for i in range(1, songs_len + 1):
-                            search_string = request.POST.get(f'song_name_{i}')
-                            yt_url = get_youtube_url(search_string)
-                            yt = YouTube(yt_url)
-                            audio_stream = yt.streams.get_audio_only()
-
-                            if audio_stream:
-                                # Download audio stream into memory without creating any temp file
-                                audio_buffer = io.BytesIO()
-                                audio_stream.stream_to_buffer(audio_buffer)
-                                audio_buffer.seek(0)
-
-                                # Add the audio stream into zip archive
-                                filename = f'{search_string}.mp3'
-                                zipf.writestr(filename, audio_buffer.read())
-                            else:
-                                unavailable.append(search_string)
-                                continue
-
-                    zip_buffer.seek(0) # resets the seek to 0
-                    response = HttpResponse(zip_buffer, content_type='application/zip')
-                    response['Content-Disposition'] = f'attachment; filename="{zip_filename}"'
-
-                    print(f'Unavailable tracks : {unavailable}')
-
-                    return response
-
+                    return download_20(request, songs_len)
                 except Exception as e:
                     return HttpResponse(f'Exception occurred {str(e)}', status=500)
 
@@ -148,30 +116,8 @@ def spotify(request):
                 r_batch_id, r_dir_path, r_file_name = download_song_fragment(dir_path, songs_fragments, f_id=f'sp_playlist__{playlist_id}')
 
                 if r_batch_id is not None:
-                    batch_length = len(songs_fragments)
-                    task_batch = [0]
-                    initial_tasks_length = 0
-                    repeater = 0
-                    sleep_time = 15
-                    while True:
-                        tasks = TaskResult.objects.all().filter(result=f'"{r_batch_id}"')
 
-                        sleep(sleep_time)
-
-                        tasks_len = len(tasks)
-                        if tasks_len > initial_tasks_length:
-                            sleep_time = 6
-                            # Now the task length has started going up
-                            task_batch.append(tasks_len)
-                            if task_batch[-2] == task_batch[-1]:
-                                if repeater == 15:
-                                    break
-                                repeater += 1
-                            elif task_batch[-2] != task_batch[-1] and repeater > 1:
-                                repeater = 1
-
-                        if tasks_len == batch_length:
-                            break
+                    timeout_mech(songs_fragments, r_batch_id)
 
                     downloaded_contents = os.listdir(dir_path)
 
@@ -218,38 +164,7 @@ def spotify_album(request):
         if request.method == "POST":
             if songs_len <= 20:
                 try:
-                    # Initializing zip buffer
-                    zip_buffer = io.BytesIO()
-                    zip_filename = f'{uuid4().hex[:8]}_{datetime.now().strftime("%Y%m%d%H%M%S")}.zip'
-                    unavailable = []
-
-                    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zipf:
-                        for i in range(1, songs_len + 1):
-                            search_string = request.POST.get(f'song_name_{i}')
-                            yt_url = get_youtube_url(search_string)
-                            yt = YouTube(yt_url)
-                            audio_stream = yt.streams.get_audio_only()
-
-                            if audio_stream:
-                                # Download audio stream into memory without creating any temp file
-                                audio_buffer = io.BytesIO()
-                                audio_stream.stream_to_buffer(audio_buffer)
-                                audio_buffer.seek(0)
-
-                                # Add the audio stream into zip archive
-                                filename = f'{search_string}.mp3'
-                                zipf.writestr(filename, audio_buffer.read())
-                            else:
-                                unavailable.append(search_string)
-                                continue
-
-                    zip_buffer.seek(0) # resets the seek to 0
-                    response = HttpResponse(zip_buffer, content_type='application/zip')
-                    response['Content-Disposition'] = f'attachment; filename="{zip_filename}"'
-
-                    print(f'un-downloadable songs {unavailable}')
-                    return response
-
+                    return download_20(request, songs_len)
                 except Exception as e:
                     return HttpResponse(f'Exception occurred {str(e)}', status=500)
 
@@ -271,32 +186,8 @@ def spotify_album(request):
                 r_batch_id, r_dir_path, r_file_name = download_song_fragment(dir_path, songs_fragments, f_id=f'sp_album__{album_id}')
 
                 if r_batch_id is not None:
-                    batch_length = len(songs_fragments)
-                    task_batch = [0]
-                    initial_tasks_length = 0
-                    repeater = 0
-                    sleep_time = 15
-                    while True:
-                        tasks = TaskResult.objects.all().filter(result=f'"{r_batch_id}"')
 
-                        sleep(sleep_time)
-
-                        tasks_len = len(tasks)
-                        if tasks_len > initial_tasks_length:
-                            sleep_time = 6
-                            # Now the task length has started going up
-                            task_batch.append(tasks_len)
-                            if task_batch[-2] == task_batch[-1]:
-                                if repeater == 15:
-                                    break
-                                repeater += 1
-                            elif task_batch[-2] != task_batch[-1] and repeater > 1:
-                                repeater = 1
-
-                        if tasks_len == batch_length:
-                            break
-
-                    print(f'Tasks {tasks} with length {len(tasks)}')
+                    timeout_mech(songs_fragments, r_batch_id)
 
                     downloaded_contents = os.listdir(dir_path)
 
