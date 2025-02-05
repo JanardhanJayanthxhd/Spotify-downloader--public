@@ -16,7 +16,7 @@ def download_batch(batch, batch_id, dir_path):
     """
     for song in batch:
         yt_url = get_youtube_url(song)
-        yt = YouTube(yt_url)
+        yt = YouTube(yt_url, 'WEB')
         audio_stream = yt.streams.get_audio_only()
         if audio_stream:
             audio_stream.download(filename=f'{song}.mp3', output_path=dir_path)
