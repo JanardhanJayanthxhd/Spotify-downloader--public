@@ -58,7 +58,7 @@ def home(request):
 def youtube(request):
     """Youtube audio page"""
     link = request.session.get('link', '')
-    yt = YouTube(link)
+    yt = YouTube(link, 'WEB')
     duration = calculate_duration(yt.length)
 
     if request.method == 'POST':
