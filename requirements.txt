@@ -23,7 +23,7 @@ pycparser==2.22
 pyreqs==0.1.1
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
-pytubefix==8.8.2
+pytubefix==8.12.1
 requests==2.32.3
 setuptools==75.6.0
 sh==2.1.0
