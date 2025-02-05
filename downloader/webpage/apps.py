@@ -50,7 +50,9 @@ class WebpageConfig(AppConfig):
             if key.expires_at.replace(tzinfo=None) < curr_timestamp:
                 key.delete()
                 # Adding a new key after one expires
-                get_spotify_token(add_new=True)
+                current_all_keys = KeyLog.object.all()
+                if len(current_all_keys) < 2:
+                    get_spotify_token(add_new=True)
 
     @staticmethod
     def clear_django_celery_task_results():
