@@ -11,7 +11,7 @@ A webapp that is used to download Spotify playlist/album/track or Youtube audio.
 
 **Server:** Python(Django), Celery, Rabbitmq, Sqlite3
 
-## Installation
+## Requirements
 
 Pytubefix(version 8.12.1) package requires <a href="https://nodejs.org/en">node.js</a> installed in pc/machine.
 
