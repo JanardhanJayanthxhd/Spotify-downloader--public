@@ -14,9 +14,9 @@ class WebpageConfig(AppConfig):
 
     def deleter(self):
         scheduler = BackgroundScheduler()
-        scheduler.add_job(self.clear_dir_job, 'interval', minutes=5)
-        scheduler.add_job(self.clear_expired_keys, 'interval', seconds=30)
-        scheduler.add_job(self.clear_django_celery_task_results, 'interval', minutes=1)
+        scheduler.add_job(self.clear_dir_job, 'interval', minutes=5, misfire_grace_time=30)
+        scheduler.add_job(self.clear_expired_keys, 'interval', seconds=30, misfire_grace_time=30)
+        scheduler.add_job(self.clear_django_celery_task_results, 'interval', minutes=5, misfire_grace_time=30)
         scheduler.start()
 
     @staticmethod
